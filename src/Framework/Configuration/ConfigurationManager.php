@@ -20,7 +20,7 @@
         protected $configuration_file;
         protected $configuration_cache;
 
-        public function __construct( $configuration_location="/config/settings.json", $autocache=true )
+        public function __construct( $configuration_location="/config/default.json", $autocache=true )
         {
 
             if( FileSystemController::exists( $configuration_location ) == false )

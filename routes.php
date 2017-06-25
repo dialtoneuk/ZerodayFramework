@@ -3,7 +3,7 @@
     /**
      * zeroday by Lewis Lancaster 2017
      *
-     * Current file: roots.php
+     * Current file: routes.php
      *
      * Created by: Gaming (on 25/06/2017 at 09:48)
      */
