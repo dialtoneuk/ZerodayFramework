@@ -1,0 +1,10 @@
+{
+  "username":"root",
+  "password":"password",
+  "database":"syscrack",
+  "host":"localhost",
+  "driver":"mysql",
+  "charset":"utf8",
+  "coallation":"utf8_unicode_ci",
+  "prefix":""
+}

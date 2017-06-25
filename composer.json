@@ -1,0 +1,28 @@
+{
+  "name": "dialtoneuk/Zeroday",
+  "description": "Zeroday is an online hacking simulator with a twist on profit manipulation",
+  "minimum-stability": "alpha",
+  "license": "apache",
+  "autoload": {
+    "psr-4": {
+      "Zeroday\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lewis Lancaster",
+      "email": "lewislancastersoftware@gmail.com"
+    },
+    {
+      "name": "Isaac Allen",
+      "email": "h9soundboy@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "illuminate/container": "^5.1",
+    "illuminate/database": "^5.1",
+    "mashape/unirest-php": "3.*",
+    "phpmailer/phpmailer": "~5.2"
+  }
+}
