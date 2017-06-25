@@ -85,7 +85,7 @@
         public function get()
         {
 
-            return( $this->database->get( session_id() ) );
+            return( $this->database->get( session_id() )->first() );
         }
 
         /**

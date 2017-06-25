@@ -2,7 +2,7 @@
     /**
      * zeroday by Lewis Lancaster 2017
      *
-     * Current file: UserSessionModel.php
+     * Current file: ActiveSessionModel.php
      *
      * Created by: Gaming (on 24/06/2017 at 09:57)
      */
@@ -14,7 +14,7 @@
     use Zeroday\Framework\Pages\ModelInterface;
     use Zeroday\Framework\Session\Support\UserSession;
 
-    class UserSessionModel implements ModelInterface
+    class ActiveSessionModel implements ModelInterface
     {
 
         protected $data = [];
@@ -41,11 +41,17 @@
         {
 
             if( $this->session->isLoggedIn() == false )
-                return array_merge( $this->data, array('session'=>false));
+                return array_merge( $this->data, array(
+                    'session' => [
+                        'sessionid' => session_id(),
+                        'active'  => $this->session->active()
+                    ]
+                ));
 
             return array_merge( $this->data, array(
                 'session' => [
                     'sessionid'     => session_id(),
+                    'active'        => $this->session->active(),
                     'userid'        => $this->session->userid(),
                     'lastaction'    => $this->session->lastaction(),
                     'logintime'     => $this->session->logintime(),

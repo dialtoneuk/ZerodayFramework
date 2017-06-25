@@ -13,11 +13,11 @@
     interface ControllerInterface
     {
 
-        public function get( array $parameters );
+        public function get( $parameters=null );
 
-        public function post( array $data );
+        public function post( $data=null );
 
-        public function delete( array $data );
+        public function delete( $data=null );
 
-        public function put( array $data );
+        public function put( $data=null );
     }

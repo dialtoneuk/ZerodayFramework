@@ -1,3 +1,4 @@
 {
-  "session.auto":true
+  "session.auto":true,
+  "database.table.lower":true
 }

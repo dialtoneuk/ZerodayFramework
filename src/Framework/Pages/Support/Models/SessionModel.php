@@ -40,12 +40,10 @@
         public function getData()
         {
 
-            if( $this->session->active() == false )
-                return array_merge( $this->data, array('session'=>false));
-
             return array_merge( $this->data, array(
                 'session' => [
-                    'sessionid' => session_id()
+                    'sessionid' => session_id(),
+                    'active'  => $this->session->active()
                 ]
             ));
         }

@@ -10,28 +10,60 @@
     namespace Zeroday\Framework\Pages;
 
 
-    use Illuminate\Contracts\View\View;
-    use Illuminate\Database\Eloquent\Model;
     use Zeroday\Framework\Configuration\Support\SettingsConfiguration;
     use Zeroday\Framework\Exceptions\Support\ZeroDayException;
 
     class PageController
     {
 
+        /**
+         * @var SettingsConfiguration
+         */
+
         protected $settings;
+
+        /**
+         * @var array
+         */
+
         protected $data_requirements = [
             'model',
             'view',
             'controller'
         ];
+
+        /**
+         * @var array
+         */
+
         protected $namespace_mapping = [
             'model'     => 'Models',
             'view'      => 'Views',
             'controller' => 'Controllers'
         ];
+
+        /**
+         * @var array
+         */
+
         protected $page_classes = [];
+
+        /**
+         * @var null|string
+         */
+
         protected $page_namespace = "Zeroday\\Game\\Pages\\";
+
+        /**
+         * @var array
+         */
+
         protected static $page_payload = [];
+
+        /**
+         * PageController constructor.
+         * @param null $page_namespace
+         */
 
         public function __construct( $page_namespace=null )
         {
@@ -42,16 +74,25 @@
                 $this->page_namespace = $page_namespace;
         }
 
+        /**
+         * @param bool $global
+         * @param bool $auto_output
+         * @return ViewInterface
+         * @throws ZeroDayException
+         */
+
         public function run( $global=true, $auto_output = true )
         {
 
             if( PageRouter::empty() )
                 throw new ZeroDayException("No routes have been found");
 
-            if( $this->isRouted() == false )
+            $url = PageRouter::match( $this->url()['path'] );
+
+            if( PageRouter::has( $url ) == false )
                 $this->notFound();
 
-            $data = PageRouter::get( $this->url()['path'] );
+            $data = PageRouter::get( $url );
 
             if( $this->check( $data ) == false )
                 throw new ZeroDayException("Data for route " . $this->url()['path'] . " is incorrect");
@@ -79,7 +120,7 @@
             if( $controller instanceof ControllerInterface == false )
                 throw new ZeroDayException($data['controller'] . " must implement the correct interface" );
 
-            $this->frontController( $controller );
+            $this->frontController( $url, $controller );
 
             $namespace = $this->namespace('view', $data['view'] );
 
@@ -102,17 +143,39 @@
             return $view;
         }
 
+        /**
+         * @return bool
+         */
+
         public function isRouted()
         {
 
             return( PageRouter::has( $this->url()['path'] ) );
         }
 
+        /**
+         * Displays a 404 page
+         */
+
         public function notFound()
         {
 
             header("HTTP/1.0 404 Not Found"); exit;
         }
+
+        /**
+         * @param $url
+         */
+
+        public function redirect( $url )
+        {
+
+            header('Location: ' . $url ); exit;
+        }
+
+        /**
+         * @return mixed
+         */
 
         public function getPage()
         {
@@ -123,21 +186,58 @@
             return( explode("/", $this->url()['path'] )[1] );
         }
 
-        private function frontController( ControllerInterface $controller )
+        /**
+         * @param $url
+         * @param ControllerInterface $controller
+         */
+
+        private function frontController( $url, ControllerInterface $controller )
         {
+
+            if( PageRouter::hasVariables( $url ) )
+                $variables = PageRouter::getVariables( $url );
 
             if( $_SERVER['REQUEST_METHOD'] == 'GET' )
             {
 
-                $controller->get( $_GET );
+                if( isset( $variables ) )
+                    $controller->get( $variables );
+                else
+                    $controller->get( null );
             }
 
             if( $_SERVER['REQUEST_METHOD'] == 'POST' )
             {
 
-                $controller->post( $_POST );
+                if( isset( $variables ) )
+                    $controller->post( $variables );
+                else
+                    $controller->post( null );
+            }
+
+            if( $_SERVER['REQUEST_METHOD'] == 'DELETE' )
+            {
+
+                if( isset( $variables ) )
+                    $controller->delete( $variables );
+                else
+                    $controller->delete( null );
+            }
+
+            if( $_SERVER['REQUEST_METHOD'] == 'PUT' )
+            {
+
+                if( isset( $variables ) )
+                    $controller->put( $variables );
+                else
+                    $controller->put( null );
             }
         }
+
+        /**
+         * @param $data
+         * @return bool
+         */
 
         private function check( $data )
         {
@@ -152,11 +252,21 @@
             return true;
         }
 
+        /**
+         * @param $key
+         * @param $class
+         * @return string
+         */
+
         private function namespace( $key, $class )
         {
 
             return ( $this->page_namespace . $this->namespace_mapping[ $key ] . "\\" . $class );
         }
+
+        /**
+         * @return mixed
+         */
 
         private function url()
         {

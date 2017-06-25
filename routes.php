@@ -25,3 +25,9 @@
         'view'      => 'IndexView',
         'controller' => 'IndexController'
     ]);
+
+    PageRouter::route('/login',[
+        'model'     => 'LoginModel',
+        'view'      => 'IndexView',
+        'controller' => 'IndexController'
+    ]);

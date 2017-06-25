@@ -32,15 +32,15 @@
 
             $data = $this->model->getData();
 
-            if( isset( $data['fuck'] ) )
+            if( $data['session']['active'] == true )
             {
 
-                die('fuck is in action');
+                die('you are logged in lol');
             }
             else
             {
 
-                die('no fuck :(');
+                die('not logged in...');
             }
         }
     }

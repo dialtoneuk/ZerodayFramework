@@ -24,23 +24,24 @@
             $this->model = $model;
         }
 
-        public function get( array $parameters )
+        public function get( $parameters=null )
         {
 
-            $this->model->setData( $parameters );
+            if( $parameters !== null )
+                $this->model->setData( $parameters );
         }
 
-        public function post(array $data)
+        public function post( $data=null )
         {
             // TODO: Implement post() method.
         }
 
-        public function delete(array $data)
+        public function delete( $data=null )
         {
             // TODO: Implement delete() method.
         }
 
-        public function put(array $data)
+        public function put( $data=null )
         {
             // TODO: Implement pit() method.
         }

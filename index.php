@@ -10,6 +10,7 @@
     define('ZERODAY_FILE_ROOT', $_SERVER['DOCUMENT_ROOT'] );
     define('ZERODAY_DATABASE_CONNECTIONFILE', 'database.default.json');
     define('ZERODAY_SETTINGS_LOCATION', '/config/settings.json');
+    define('ZERODAY_SETTINGS_GLOBAL', true );
 
     /**
      * Init Composer
@@ -24,15 +25,28 @@
     require_once "routes.php";
 
     /**
-     * Start the page controller
+     * Include our classes
      */
 
     use Zeroday\Framework\Pages\PageController;
+    use Zeroday\Framework\Application\Container;
+    use Zeroday\Framework\Configuration\Support\SettingsConfiguration;
 
-    $page_controller = new PageController();
+    /**
+     * Add to global container
+     */
+
+    Container::set('page_controller', new PageController() );
+
+    /**
+     * If this global is true, we will add the settings to the container too
+     */
+
+    if( ZERODAY_SETTINGS_GLOBAL )
+        Container::set('settings', new SettingsConfiguration( true ) );
 
     /**
      * Run the page controller
      */
 
-    $page_controller->run( true, true );
+    Container::get('page_controller')->run( true, true );

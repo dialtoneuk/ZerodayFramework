@@ -32,6 +32,90 @@
             return( self::$routes[ $url] );
         }
 
+        public static function match( $url )
+        {
+
+            foreach( self::$routes as $key=>$value )
+            {
+
+                $url = self::getBase( $key, $url );
+
+                $route_url = self::transform( $key );
+
+                if( $route_url == $url )
+                {
+
+                    return $key;
+                }
+            }
+
+            return null;
+        }
+
+        public static function transform( $url )
+        {
+
+            $url = array_values( explode('/', $url ) );
+
+            foreach( $url as $key=>$value )
+            {
+
+                if( substr( $value, 0, 1 ) == "@" )
+                    unset( $url[ $key ] );
+            }
+
+            return implode('/', $url );
+        }
+
+        public static function getBase( $route, $url )
+        {
+
+            $route = array_values( explode('/', $route ) );
+
+            $url = array_values( explode('/', $url ) );
+
+            foreach( $route as $key=>$value )
+            {
+
+                if( substr( $value, 0, 1 ) == "@" )
+                    unset( $url[ $key ] );
+            }
+
+            return implode('/', $url );
+        }
+
+        public static function getVariables( $url )
+        {
+
+            $request_url = array_values( explode('/', parse_url( $_SERVER['REQUEST_URI'] )['path'] ) );
+
+            if( empty( $request_url ) )
+                return [];
+
+            $url = array_values( explode('/', $url ) );
+
+            if( count( $url ) !== count( $request_url ) )
+                throw new ZeroDayException('Mismatch in url parameter count');
+
+            $variables = [];
+
+            foreach( $url as $key=>$value )
+            {
+
+                if( substr( $value, 0, 1 ) == "@" )
+                    $variables[ ltrim( $value, '@') ] = $request_url[ $key ];
+            }
+
+
+            return $variables;
+        }
+
+        public static function hasVariables( $url )
+        {
+
+            return( str_contains( $url, '@' ) );
+        }
+
         public static function has( $url )
         {
 
