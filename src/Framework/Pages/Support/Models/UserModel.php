@@ -30,7 +30,9 @@
         {
 
             if( $this->session->isLoggedIn() == false )
-                return array_merge( $this->data, array('session'=>false));
+                return array_merge([
+                    'user' => false
+                ], parent::getData() );
 
             return array_merge([
                 'user' => [

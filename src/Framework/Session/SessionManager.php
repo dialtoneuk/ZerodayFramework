@@ -89,6 +89,22 @@
         }
 
         /**
+         * @param $userid
+         */
+
+        public function add( $userid )
+        {
+
+            $this->database->inset([
+                'userid'        => $userid,
+                'sessionid'     => session_id(),
+    'lastaction'    => time(),
+        //'logintime'     => time(),
+    'ipaddress'     => $_SERVER['REMOTE_ADDR']
+    ]);
+    }
+
+        /**
          * Removes the session from the database
          */
 

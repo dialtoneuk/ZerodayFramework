@@ -2,7 +2,7 @@
     /**
      * zeroday by Lewis Lancaster 2017
      *
-     * Current file: IndexModel.php
+     * Current file: LogintModel.php
      *
      * Created by: Gaming (on 24/06/2017 at 09:56)
      */
@@ -11,9 +11,9 @@
 
 
     use Zeroday\Framework\Pages\ModelInterface;
-    use Zeroday\Framework\Pages\Support\Models\UserModel;
+    use Zeroday\Framework\Pages\Support\Models\SessionModel;
 
-    class LoginModel extends UserModel implements ModelInterface
+    class LoginModel extends SessionModel implements ModelInterface
     {
 
         /**
@@ -49,6 +49,6 @@
         public function getTemplate()
         {
 
-            return ( 'templates/pages/page.index' );
+            return ( 'templates/pages/page.login' );
         }
     }

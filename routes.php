@@ -26,8 +26,22 @@
         'controller' => 'IndexController'
     ]);
 
+    /**
+     * Login
+     */
+
     PageRouter::route('/login',[
         'model'     => 'LoginModel',
-        'view'      => 'IndexView',
-        'controller' => 'IndexController'
+        'view'      => 'LoginView',
+        'controller' => 'LoginController'
+    ]);
+
+    /**
+     * Logout
+     */
+
+    PageRouter::route('/logout',[
+        'model'     => 'DefaultModel',
+        'view'      => 'DefaultView',
+        'controller' => 'LogoutController'
     ]);

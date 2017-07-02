@@ -2,7 +2,7 @@
     /**
      * zeroday by Lewis Lancaster 2017
      *
-     * Current file: IndexView.php
+     * Current file: LoginView.php
      *
      * Created by: Gaming (on 24/06/2017 at 09:50)
      */
@@ -14,7 +14,7 @@
     use Zeroday\Framework\Pages\ModelInterface;
     use Zeroday\Framework\Pages\ViewInterface;
 
-    class IndexView implements ViewInterface
+    class LoginView implements ViewInterface
     {
 
         protected $controller;

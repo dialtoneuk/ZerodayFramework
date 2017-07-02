@@ -18,8 +18,8 @@
     {
 
         protected $data = [];
-        protected $session;
         protected $settings;
+        public $session;
 
         public function __construct()
         {

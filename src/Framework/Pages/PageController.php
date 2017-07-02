@@ -170,7 +170,7 @@
         public function redirect( $url )
         {
 
-            header('Location: ' . $url ); exit;
+            header('Location: /' . $url ); exit;
         }
 
         /**
@@ -201,36 +201,36 @@
             {
 
                 if( isset( $variables ) )
-                    $controller->get( $variables );
+                    $controller->get( $variables, $_GET );
                 else
-                    $controller->get( null );
+                    $controller->get( null, $_GET );
             }
 
             if( $_SERVER['REQUEST_METHOD'] == 'POST' )
             {
 
                 if( isset( $variables ) )
-                    $controller->post( $variables );
+                    $controller->post( $variables, $_POST  );
                 else
-                    $controller->post( null );
+                    $controller->post( null, $_POST );
             }
 
             if( $_SERVER['REQUEST_METHOD'] == 'DELETE' )
             {
 
                 if( isset( $variables ) )
-                    $controller->delete( $variables );
+                    $controller->delete( $variables, $_POST );
                 else
-                    $controller->delete( null );
+                    $controller->delete( null, $_POST );
             }
 
             if( $_SERVER['REQUEST_METHOD'] == 'PUT' )
             {
 
                 if( isset( $variables ) )
-                    $controller->put( $variables );
+                    $controller->put( $variables, $_POST );
                 else
-                    $controller->put( null );
+                    $controller->put( null, $_POST );
             }
         }
 
